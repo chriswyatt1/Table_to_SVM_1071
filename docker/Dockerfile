@@ -1,6 +1,6 @@
 FROM mambaorg/micromamba:0.13.1
 
-RUN echo $'name:\nben_svm\n\nchannels:\n  - bioconda\n  - conda-forge\n\ndependencies:\n  - "r-base=4.1.0"\n  - "r-devtools=2.4.2"\n  - "python=3.7"\n  - perl\n  - wget\n\n' > R-base_micro.yml 
+RUN echo $'name:\n  ben_svm\n\nchannels:\n  - bioconda\n  - conda-forge\n\ndependencies:\n  - "r-base=4.1.0"\n  - "r-devtools=2.4.2"\n  - "python=3.7"\n  - perl\n  - wget\n\n' > R-base_micro.yml 
 
 RUN micromamba install -y -n base -f R-base_micro.yml && \
     micromamba clean --all --yes
