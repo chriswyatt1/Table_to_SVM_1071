@@ -1,5 +1,5 @@
-load("counts_clean_subsample.RData")
-load("phenotypic_data.RData")
+load("RData/counts_clean_subsample.RData")
+load("RData/phenotypic_data.RData")
 
 library(tidyverse)
 library(e1071)

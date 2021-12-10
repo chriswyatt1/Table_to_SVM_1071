@@ -1,5 +1,11 @@
 #This Nextflow pipeline is to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids).
 
+To use R in docker , pull this repo and execute R using (should take 5 mins to download):
+
+```
+docker run -it --rm chriswyatt/svm1071deseq2limma R
+```
+
 # Taylor-et-al-2020-demo
 
 This repo contains machine learning demo code and data for Taylor et al "The molecular basis of socially-mediated phenotypic plasticity in a eusocial paper wasp".

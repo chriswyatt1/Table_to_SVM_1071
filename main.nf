@@ -29,7 +29,6 @@ params.outdir = "results"
 
 log.info """\
  S V M 
- S P L I C I N G
  P I P E L I N E
  ===================================
  input rnaseq data                    : ${params.rnaseq}
