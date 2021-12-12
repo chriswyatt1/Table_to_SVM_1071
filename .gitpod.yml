@@ -32,6 +32,3 @@ tasks:
 ports:
   - port: 3000
     onOpen: open-preview
-
-image:
-  file: ./docker/Dockerfile
