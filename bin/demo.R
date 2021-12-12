@@ -1,11 +1,12 @@
-load("RData/counts_clean_subsample.RData")
-load("RData/phenotypic_data.RData")
-
+#!/usr/bin/env Rscript 
 library(tidyverse)
 library(e1071)
 library(DESeq2)
 library(limma)
 library(pracma)
+
+counts_clean_subsample <- read.table("counts_clean_subsample.csv")
+phenotypic_data <- read.table("phenotypic_data.csv")
 
 #### Define SVM function
 svm.train = function(readcounts, traindata, testdata = NA, referencelevel = "queen", kerneltype = "radial", crossfold = 5, vstCheck = T){
