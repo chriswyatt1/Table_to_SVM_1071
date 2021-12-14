@@ -1,5 +1,25 @@
-#This Nextflow pipeline is to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids).
+# Run SVM on RNASeq data with Nextflow
 
+This Nextflow pipeline is designed to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids). See publication: https://www.nature.com/articles/s41467-021-21095-6 (Open access)
+
+To start you need to go to the interactive gitpod environment for this repo (for this you need a github, gitlab or bitbucket account before starting). The gitpod environment is free to access, and currently you have 50 hours per month free for users of the mentioned git accounts.
+
+Next, Click on the following URL: https://gitpod.io/#https://github.com/chriswyatt1/Table_to_SVM_1071/tree/Gitpod_testing
+
+Then, log into your git hosting account.
+
+Then in the terminal section (bottom right), you can run the demo with:
+```
+nextflow run main.nf -bg -profile docker
+```
+
+-->
+Where, first we call `nextflow` to `run` the script called `main.nf`
+Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. 
+
+
+
+# Info for testing only
 To use R in docker , pull this repo and execute R using (should take 5 mins to download):
 
 ```
