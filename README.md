@@ -14,6 +14,7 @@ nextflow run main.nf -bg -profile docker
 ```
 -->
 Where, first we call `nextflow` to `run` the script called `main.nf`
+Then we use the background flag `-bg`, so that Nextflow runs in the background, and you still have control of the terminal 
 Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. 
 
 4. Now you will see something similar to the following:
