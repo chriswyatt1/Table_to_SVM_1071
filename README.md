@@ -4,20 +4,40 @@ This Nextflow pipeline is designed to run a simple SVM analysis on a basic table
 
 To start you need to go to the interactive gitpod environment for this repo (for this you need a github, gitlab or bitbucket account before starting). The gitpod environment is free to access, and currently you have 50 hours per month free for users of the mentioned git accounts.
 
-Next, Click on the following URL: https://gitpod.io/#https://github.com/chriswyatt1/Table_to_SVM_1071/tree/Gitpod_testing
+1. To open the gitpod environment, click on the following URL: https://gitpod.io/#https://github.com/chriswyatt1/Table_to_SVM_1071/tree/Gitpod_testing
 
-Then, log into your git hosting account.
+2. Then, log into your git hosting account.
 
-Then in the terminal section (bottom right), you can run the demo with:
+3. Then in the terminal section (bottom right), you can run the demo with:
 ```
 nextflow run main.nf -bg -profile docker
 ```
-
 -->
 Where, first we call `nextflow` to `run` the script called `main.nf`
 Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. 
 
+4. Now you will see something similar to the following:
+```
+Launching `main.nf` [sad_liskov] - revision: 51169b9f2c
+ S V M 
+ P I P E L I N E
+ ===================================
+ input rnaseq data                    : /workspace/Table_to_SVM_1071/data/counts_clean_subsample.csv
+ phenotypic data for each sample      : /workspace/Table_to_SVM_1071/data/phenotypic_data.csv
+ out directory                        : results
+ 
+[24/67c3d6] Submitted process > RUN_SVM (1)
+```
 
+--> Which shows that nextflow is running the demo data. To check if it is still running you can use `top` and you should see a `java` and `R` process running. This script should take an hour to run. 
+
+5. Once the pipeline is finished it will print the following message to screen:
+
+```
+
+```
+
+6. Now you can try running the same repo on you own imported data. Though, in many cases this will be too computationally heavy for the 50 free hours. Therefore, we recommmend that you git clone this repo locally, or on a university cluster to run on large datasets. This will likely involve creating a new profile to submit jobs to a cluster. There is already another profile `-profile myriad` which shows a working example of a Sun Grid ENgine config (UCL myriad supercomputer) script which you can find in conf/myriad.config. Find more info about setting the config with your computational helpdesk or check public repos e.g. https://github.com/nf-core/configs/tree/master/conf
 
 # Info for testing only
 To use R in docker , pull this repo and execute R using (should take 5 mins to download):
