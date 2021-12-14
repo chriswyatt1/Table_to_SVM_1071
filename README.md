@@ -31,6 +31,15 @@ Launching `main.nf` [sad_liskov] - revision: 51169b9f2c
 
 --> Which shows that nextflow is running the demo data. To check if it is still running you can use `top` and you should see a `java` and `R` process running (among others). This script should take an hour to run. 
 
+--> You can check where the program is running by looking in the `work` directory, and above you can see the start of the working folder : work/24/67c3d6.............  (press tab to complete folder name- default hex numbers). In this directory use `ls -lath` to see the working files, such as .command.sh , which contains the command to run:
+
+```
+#!/bin/bash -ue
+demo.R counts_clean_subsample.csv phenotypic_data.csv
+```
+
+--> Check .command.out  in the same work directory, to see the actual R messages being written.
+
 5. Once the pipeline is finished it will print the following message to screen:
 
 ```
