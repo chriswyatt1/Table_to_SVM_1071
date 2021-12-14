@@ -29,7 +29,7 @@ Launching `main.nf` [sad_liskov] - revision: 51169b9f2c
 [24/67c3d6] Submitted process > RUN_SVM (1)
 ```
 
---> Which shows that nextflow is running the demo data. To check if it is still running you can use `top` and you should see a `java` and `R` process running. This script should take an hour to run. 
+--> Which shows that nextflow is running the demo data. To check if it is still running you can use `top` and you should see a `java` and `R` process running (among others). This script should take an hour to run. 
 
 5. Once the pipeline is finished it will print the following message to screen:
 
