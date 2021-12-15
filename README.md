@@ -43,6 +43,12 @@ demo.R counts_clean_subsample.csv phenotypic_data.csv
 5. Once the pipeline is finished it will print the following message to screen:
 
 ```
+[1] "Root mean cross-validation error rate for full model: 0.04733"
+[1] "Features remaining: 900"
+...
+[1] "Features remaining: 100"
+[1] "Number of genes included in optimised model: 100"
+[1] "Root mean cross-validation error rate for optimised model: 0.07346"
 Done! Open your report in your browser --> results/report.html (if you added -with-report flag)
 ```
 
