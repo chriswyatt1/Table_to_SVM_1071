@@ -8,13 +8,13 @@ library(pracma)
 #allow ARGV input file names. Expect 1: counts matrix, 2: Phonotypic matrix, 3: Condition A control, 4: Condition B control 
 args = commandArgs(trailingOnly=TRUE)
 
-counts_clean_subsample <- as.matrix(read.csv("args[1]", row.names = 1))
-phenotypic_data <- read.table("args[2]", h=T, sep=",")
+counts_clean_subsample <- as.matrix(read.csv(args[1], row.names = 1))
+phenotypic_data <- read.table(args[2], h=T, sep=",")
 condA <- args[3]
 condB <- args[4]
 
 #### Define SVM function
-svm.train = function(readcounts, traindata, testdata = NA, referencelevel = "condA", kerneltype = "radial", crossfold = 5, vstCheck = T){
+svm.train = function(readcounts, traindata, testdata = NA, referencelevel = condA , kerneltype = "radial", crossfold = 5, vstCheck = T){
   
   svm.counts.test=NA
   
@@ -72,8 +72,8 @@ svm.train = function(readcounts, traindata, testdata = NA, referencelevel = "con
 #### Perform initial classification
 # Divide data into training set and test set
 svm.data = phenotypic_data[,c("ID","Role")]
-svm.data.train = subset(svm.data, Role %in% c("condA","condB"))
-svm.data.test = subset(svm.data, !(Role %in% c("condA","condB")))
+svm.data.train = subset(svm.data, Role %in% c( condA ,condB ))
+svm.data.test = subset(svm.data, !(Role %in% c( condA ,condB )))
 
 # apply svm to entire set of genes
 svm.full = svm.train(counts_clean_subsample,
@@ -106,7 +106,7 @@ while(nfeatures > nfeatures_target){
     # Perform a grid search to optimise SVM parameters
     svm.counts.tuneResult = tune("svm", 
                                  train.x = t(svm.counts.train.iterate), 
-                                 train.y =  as.numeric(traindata$Role == "condA"),
+                                 train.y =  as.numeric(traindata$Role == condA),
                                  probability = TRUE, 
                                  scale = FALSE,
                                  kernel = "radial", 
@@ -153,7 +153,7 @@ counts_clean_subsample = subset(counts_clean_subsample,
                                            !(rownames(counts_clean_subsample) %in% features_to_remove))
 # re-perform support vector classification using the new, optimally caste-separating set of features
 svm.optimal = svm.train(counts_clean_subsample, 
-                        referencelevel = "condA",
+                        referencelevel = condA,
                         svm.data.train, 
                         svm.data.test,
                         crossfold = 3,

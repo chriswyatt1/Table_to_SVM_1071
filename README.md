@@ -43,8 +43,10 @@ demo.R counts_clean_subsample.csv phenotypic_data.csv
 5. Once the pipeline is finished it will print the following message to screen:
 
 ```
-
+Done! Open your report in your browser --> results/report.html (if you added -with-report flag)
 ```
+
+--> Your resulting Hockey error plot should be in a folder called `results`.
 
 6. Now you can try running the same repo on you own imported data. Though, in many cases this will be too computationally heavy for the 50 free hours. Therefore, we recommmend that you git clone this repo locally, or on a university cluster to run on large datasets. This will likely involve creating a new profile to submit jobs to a cluster. There is already another profile `-profile myriad` which shows a working example of a Sun Grid ENgine config (UCL myriad supercomputer) script which you can find in conf/myriad.config. Find more info about setting the config with your computational helpdesk or check public repos (e.g. https://github.com/nf-core/configs/tree/master/conf) for examples.
 
