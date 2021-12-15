@@ -46,7 +46,20 @@ demo.R counts_clean_subsample.csv phenotypic_data.csv
 
 ```
 
-6. Now you can try running the same repo on you own imported data. Though, in many cases this will be too computationally heavy for the 50 free hours. Therefore, we recommmend that you git clone this repo locally, or on a university cluster to run on large datasets. This will likely involve creating a new profile to submit jobs to a cluster. There is already another profile `-profile myriad` which shows a working example of a Sun Grid ENgine config (UCL myriad supercomputer) script which you can find in conf/myriad.config. Find more info about setting the config with your computational helpdesk or check public repos e.g. https://github.com/nf-core/configs/tree/master/conf
+6. Now you can try running the same repo on you own imported data. Though, in many cases this will be too computationally heavy for the 50 free hours. Therefore, we recommmend that you git clone this repo locally, or on a university cluster to run on large datasets. This will likely involve creating a new profile to submit jobs to a cluster. There is already another profile `-profile myriad` which shows a working example of a Sun Grid ENgine config (UCL myriad supercomputer) script which you can find in conf/myriad.config. Find more info about setting the config with your computational helpdesk or check public repos (e.g. https://github.com/nf-core/configs/tree/master/conf) for examples.
+
+7. To set your own input data and phenotype to run the SVM around, use the following flags:
+```
+--rnaseq = "$baseDir/data/counts_clean_subsample.csv"
+--phenot = "$baseDir/data/phenotypic_data.csv"
+--condA  = "queen"
+--condB  = "worker_ctrl"
+```
+Where:
+`rnaseq` is the matrix of counts. Here in the example, the file is in the data directory
+`phenot` is the matrix of phenotypes
+`condA` is the chosen word to choose for the positive condition (1)
+`condB` is the chosen word to choose for the negative condition (0)
 
 # Info for testing only
 To use R in docker , pull this repo and execute R using (should take 5 mins to download):
