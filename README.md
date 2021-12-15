@@ -2,11 +2,11 @@
 
 This Nextflow pipeline is designed to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids). See publication: https://www.nature.com/articles/s41467-021-21095-6 (Open access)
 
-To start you need to go to the interactive gitpod environment for this repo (for this you need a github, gitlab or bitbucket account before starting). The gitpod environment is free to access, and currently you have 50 hours per month free for users of the mentioned git accounts.
+To test this script, we suggest using the interactive gitpod environment for this repo (for this you need a github, gitlab or bitbucket account before starting). The gitpod environment is free to access, and currently you have 50 hours per month free for users of the mentioned git accounts. Else, if you want to just clone this repo and run locally or on a computing cluster use `git clone https://github.com/chriswyatt1/Table_to_SVM_1071.git`, then install Nextflow (https://www.nextflow.io/docs/latest/getstarted.html) and follow from instruction 3.
 
 1. To open the gitpod environment, click on the following URL: https://gitpod.io/#https://github.com/chriswyatt1/Table_to_SVM_1071/tree/Gitpod_testing
 
-2. Then, log into your git hosting account.
+2. Then, log into your git hosting account. Now you are in a gitpod environment which is sufficient to run the demo data. If you want to try on large datasets we recommend git cloning the repo.
 
 3. Then in the terminal section (bottom right), you can run the demo with:
 ```
