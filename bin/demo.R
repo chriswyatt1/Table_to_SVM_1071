@@ -8,8 +8,16 @@ library(pracma)
 #allow ARGV input file names. Expect 1: counts matrix, 2: Phonotypic matrix, 3: Condition A control, 4: Condition B control 
 args = commandArgs(trailingOnly=TRUE)
 
-counts_clean_subsample <- as.matrix(read.csv(args[1], row.names = 1))
-phenotypic_data <- read.table(args[2], h=T, sep=",")
+counts_clean_subsample <- NA
+if (grepl (".*?\\.tsv", args[1])){counts_clean_subsample <- as.matrix(read.csv(args[1], row.names = 1, sep="\t"))}
+if (grepl (".*?\\.csv", args[1])){counts_clean_subsample <- as.matrix(read.csv(args[1], row.names = 1))}
+
+phenotypic_data <- NA
+if (grepl (".*?\\.tsv", args[2])){phenotypic_data <- read.table(args[2], h=1, sep="\t")}
+if (grepl (".*?\\.csv", args[2])){phenotypic_data <- read.table(args[2], h=1, sep="," )}
+
+#read.table(args[2], h=T, sep=",")
+
 condA <- args[3]
 condB <- args[4]
 
