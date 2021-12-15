@@ -5,8 +5,11 @@ library(DESeq2)
 library(limma)
 library(pracma)
 
-counts_clean_subsample <- as.matrix(read.csv("counts_clean_subsample.csv", row.names = 1))
-phenotypic_data <- read.table("phenotypic_data.csv", h=T, sep=",")
+#allow ARGV input file names. Expect 1: counts matrix, 2: Phonotypic matrix, 3: Condition A control, 4: Condition B control 
+args = commandArgs(trailingOnly=TRUE)
+
+counts_clean_subsample <- as.matrix(read.csv("args[1]", row.names = 1))
+phenotypic_data <- read.table("args[2]", h=T, sep=",")
 
 #### Define SVM function
 svm.train = function(readcounts, traindata, testdata = NA, referencelevel = "queen", kerneltype = "radial", crossfold = 5, vstCheck = T){
@@ -65,7 +68,7 @@ svm.train = function(readcounts, traindata, testdata = NA, referencelevel = "que
 }
 
 #### Perform initial classification
-# Divide data into training (control) set and test (queen removal) set
+# Divide data into training set and test set
 svm.data = phenotypic_data[,c("ID","Role")]
 svm.data.train = subset(svm.data, Role %in% c("queen","worker_ctrl"))
 svm.data.test = subset(svm.data, !(Role %in% c("queen","worker_ctrl")))
