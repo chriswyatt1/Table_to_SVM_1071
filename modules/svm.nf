@@ -1,6 +1,6 @@
 process RUN_SVM {
     label 'svm'
-    publishDir "$params.outdir/"
+    publishDir "$params.outdir/" , mode: 'copy'
     //stageInMode 'copy'
     input:
         path data
