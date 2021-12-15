@@ -55,7 +55,7 @@ input_phenotype = channel
 
 
 workflow {
-    RUN_SVM ( input_rnaseq , input_phenotype , )
+    RUN_SVM ( input_rnaseq , input_phenotype )
 }
 
 workflow.onComplete {
