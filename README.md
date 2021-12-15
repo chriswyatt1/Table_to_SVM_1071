@@ -14,10 +14,9 @@ nextflow run main.nf -bg -profile docker
 ```
 -->
 Where, first we call `nextflow` to `run` the script called `main.nf`
-Then we use the background flag `-bg`, so that Nextflow runs in the background, and you still have control of the terminal 
-Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. 
+Then we use the background flag `-bg`, so that Nextflow runs in the background, and you still have control of the terminal. Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. If you are running locally, then you need to make sure docker is running on your machine. If you are running on a computer cluster you will likely need to use singularity (ask your compute cluster admin for help writing a config file to allow nextflow to find singularity. For help, see conf/myriad.config which shows an example profile called myriad that runs an example singulairity configuration on `sge` at a specific cluster in UCL). 
 
-4. Now you will see something similar to the following:
+4. Once you run the Nextflow script, you should see something similar to the following:
 ```
 Launching `main.nf` [sad_liskov] - revision: 51169b9f2c
  S V M 
