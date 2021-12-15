@@ -101,7 +101,7 @@ while(nfeatures > nfeatures_target){
   error = c()
   
   #run repeatedly to account for stochasticity in cross-validation
-  for(i in 1:20){
+  for(i in 1:3){
     
     # Perform a grid search to optimise SVM parameters
     svm.counts.tuneResult = tune("svm", 
