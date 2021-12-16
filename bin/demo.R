@@ -21,8 +21,10 @@ if (grepl (".*?\\.csv", args[2])){phenotypic_data <- read.table(args[2], h=1, se
 condA <- args[3]
 condB <- args[4]
 
+print ("Add SVM function")
+
 #### Define SVM function
-svm.train = function(readcounts, traindata, testdata = NA, referencelevel = condA , kerneltype = "radial", crossfold = 5, vstCheck = T){
+svm.train = function(readcounts, traindata, testdata = NA, referencelevel = condA , kerneltype = "radial", crossfold = 1, vstCheck = T){
   
   svm.counts.test=NA
   
@@ -87,7 +89,7 @@ svm.data.test = subset(svm.data, !(Role %in% c( condA ,condB )))
 svm.full = svm.train(counts_clean_subsample,
                      svm.data.train, 
                      svm.data.test, 
-                     crossfold = 3,
+                     crossfold = 1,
                      vstCheck = F)
 
 print(paste0("Root mean cross-validation error rate for full model: ",svm.full$validation_error))
