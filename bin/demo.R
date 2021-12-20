@@ -20,11 +20,16 @@ if (grepl (".*?\\.csv", args[2])){phenotypic_data <- read.table(args[2], h=1, se
 
 condA <- args[3]
 condB <- args[4]
+setCrossfold <- args[5]
+numFeatureTarget <- args[6]
+numRepeatStochasticity <- args[7]
+
+print(paste0("All arguments have been read in correctly\n"))
 
 print ("Add SVM function")
 
 #### Define SVM function
-svm.train = function(readcounts, traindata, testdata = NA, referencelevel = condA , kerneltype = "radial", crossfold = 1, vstCheck = T){
+svm.train = function(readcounts, traindata, testdata = NA, referencelevel = condA , kerneltype = "radial", crossfold = setCrossfold , vstCheck = T){
   
   svm.counts.test=NA
   
@@ -79,18 +84,21 @@ svm.train = function(readcounts, traindata, testdata = NA, referencelevel = cond
   return(svm.result)
 }
 
+
+
+print(paste0("Created a SVM function\n"))
+
+
 #### Perform initial classification
 # Divide data into training set and test set
 svm.data = phenotypic_data[,c("ID","Role")]
 svm.data.train = subset(svm.data, Role %in% c( condA ,condB ))
 svm.data.test = subset(svm.data, !(Role %in% c( condA ,condB )))
 
+print(paste0("Run SVM on all data\n"))
+
 # apply svm to entire set of genes
-svm.full = svm.train(counts_clean_subsample,
-                     svm.data.train, 
-                     svm.data.test, 
-                     crossfold = 1,
-                     vstCheck = F)
+svm.full = svm.train(counts_clean_subsample, svm.data.train, svm.data.test, crossfold = as.numeric(setCrossfold) ,  vstCheck = F)
 
 print(paste0("Root mean cross-validation error rate for full model: ",svm.full$validation_error))
 
@@ -100,7 +108,7 @@ svm.counts.train.iterate = svm.full$traincounts
 #record original number of features
 nfeatures = nrow(svm.counts.train.iterate)
 #target number of features 
-nfeatures_target = 100
+nfeatures_target = numFeatureTarget
 traindata = svm.data.train
 #instantiate data frame to hold data on the error of each model
 iterations = data.frame(feature = character(),
@@ -111,7 +119,7 @@ while(nfeatures > nfeatures_target){
   error = c()
   
   #run repeatedly to account for stochasticity in cross-validation
-  for(i in 1:3){
+  for(i in 1:numRepeatStochasticity){
     
     # Perform a grid search to optimise SVM parameters
     svm.counts.tuneResult = tune("svm", 
@@ -121,7 +129,7 @@ while(nfeatures > nfeatures_target){
                                  scale = FALSE,
                                  kernel = "radial", 
                                  tunecontrol = tune.control(sampling = "cross", 
-                                                            cross = 3),
+                                                            cross = as.numeric(setCrossfold)),
                                  ranges = list(gamma = 10^(-5:-7), cost = 2^(4:6)))
     #record error
     error = c(error, svm.counts.tuneResult$best.performance)
@@ -144,6 +152,9 @@ while(nfeatures > nfeatures_target){
   #output every 100 runs to track progress
   if((nfeatures/100)%%1==0){print(paste0("Features remaining: ",nfeatures))}
 }
+
+print(paste0("Feature selection has been performed\n"))
+
 iterLength = 1:nrow(iterations)
 # take moving average to smooth out variation
 moving_avg = movavg(iterations$error_before_removal, 100, "s") 
@@ -162,11 +173,14 @@ features_to_remove = iterations$feature[1:optimal_removal]
 counts_clean_subsample = subset(counts_clean_subsample,
                                            !(rownames(counts_clean_subsample) %in% features_to_remove))
 # re-perform support vector classification using the new, optimally caste-separating set of features
+
+print(paste0("Running final SVM with optimal settings\n"))
+
 svm.optimal = svm.train(counts_clean_subsample, 
                         referencelevel = condA,
                         svm.data.train, 
                         svm.data.test,
-                        crossfold = 3,
+                        crossfold = as.numeric(setCrossfold),
                         vstCheck = F)
 
 print(paste0("Number of genes included in optimised model: ", nrow(counts_clean_subsample)))

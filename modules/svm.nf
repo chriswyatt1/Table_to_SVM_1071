@@ -11,6 +11,6 @@ process RUN_SVM {
 
     script:
     """
-    demo.R $data $pheno	$params.condA $params.condB
+    demo.R $data $pheno	$params.condA $params.condB $params.crossfold $params.numFeatureTarget $params.numRepeatStochasticity
     """
 }
