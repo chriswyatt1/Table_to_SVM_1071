@@ -1,6 +1,6 @@
 process RUN_SVM {
     label 'svm'
-    publishDir "$params.outdir/"
+    publishDir "$params.outdir/" , mode: 'copy'
     //stageInMode 'copy'
     input:
         path data
@@ -11,6 +11,6 @@ process RUN_SVM {
 
     script:
     """
-    demo.R $data $pheno	
+    demo.R $data $pheno	$params.condA $params.condB $params.crossfold $params.numFeatureTarget $params.numRepeatStochasticity
     """
 }

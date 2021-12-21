@@ -1,4 +1,80 @@
-#This Nextflow pipeline is to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids).
+# Run SVM on RNASeq data with Nextflow
+
+This Nextflow pipeline is designed to run a simple SVM analysis on a basic table of gene expression counts with a table of features (such as queen/worker ids). See publication: https://www.nature.com/articles/s41467-021-21095-6 (Open access)
+
+To test this script, we suggest using the interactive gitpod environment for this repo (for this you need a github, gitlab or bitbucket account before starting). The gitpod environment is free to access, and currently you have 50 hours per month free for users of the mentioned git accounts. Else, if you want to just clone this repo and run locally or on a computing cluster use `git clone https://github.com/chriswyatt1/Table_to_SVM_1071.git`, then install Nextflow (https://www.nextflow.io/docs/latest/getstarted.html) and follow from instruction 3.
+
+1. To open the gitpod environment, click on the following URL: https://gitpod.io/#https://github.com/chriswyatt1/Table_to_SVM_1071/tree/Gitpod_testing
+
+2. Then, log into your git hosting account. Now you are in a gitpod environment which is sufficient to run the demo data. If you want to try on large datasets we recommend git cloning the repo.
+
+3. Then in the terminal section (bottom right), you can run the demo with:
+```
+nextflow run main.nf -bg -profile docker
+```
+-->
+Where, first we call `nextflow` to `run` the script called `main.nf`
+Then we use the background flag `-bg`, so that Nextflow runs in the background, and you still have control of the terminal. Then we use the docker profile flag `-profile docker`, which tells Nextflow to use docker within this environment, where all the programs are available to run the repo code. If you are running locally, then you need to make sure docker is running on your machine. If you are running on a computer cluster you will likely need to use singularity (ask your compute cluster admin for help writing a config file to allow nextflow to find singularity. For help, see conf/myriad.config which shows an example profile called myriad that runs an example singulairity configuration on `sge` at a specific cluster in UCL). 
+
+4. Once you run the Nextflow script, you should see something similar to the following:
+```
+Launching `main.nf` [sad_liskov] - revision: 51169b9f2c
+ S V M 
+ P I P E L I N E
+ ===================================
+ input rnaseq data                    : /workspace/Table_to_SVM_1071/data/counts_clean_subsample.csv
+ phenotypic data for each sample      : /workspace/Table_to_SVM_1071/data/phenotypic_data.csv
+ out directory                        : results
+ 
+[24/67c3d6] Submitted process > RUN_SVM (1)
+```
+
+--> Which shows that nextflow is running the demo data. To check if it is still running you can use `top` and you should see a `java` and `R` process running (among others). This script should take an hour to run. 
+
+--> You can check where the program is running by looking in the `work` directory, and above you can see the start of the working folder : work/24/67c3d6.............  (press tab to complete folder name- default hex numbers). In this directory use `ls -lath` to see the working files, such as .command.sh , which contains the command to run:
+
+```
+#!/bin/bash -ue
+demo.R counts_clean_subsample.csv phenotypic_data.csv
+```
+
+--> Check .command.out  in the same work directory, to see the actual R messages being written.
+
+5. Once the pipeline is finished it will print the following message to screen:
+
+```
+[1] "Root mean cross-validation error rate for full model: 0.04733"
+[1] "Features remaining: 900"
+...
+[1] "Features remaining: 100"
+[1] "Number of genes included in optimised model: 100"
+[1] "Root mean cross-validation error rate for optimised model: 0.07346"
+Done! Open your report in your browser --> results/report.html (if you added -with-report flag)
+```
+
+--> Your resulting Hockey error plot should be in a folder called `results`.
+
+6. Now you can try running the same repo on you own imported data. Though, in many cases this will be too computationally heavy for the 50 free hours. Therefore, we recommmend that you git clone this repo locally, or on a university cluster to run on large datasets. This will likely involve creating a new profile to submit jobs to a cluster. There is already another profile `-profile myriad` which shows a working example of a Sun Grid ENgine config (UCL myriad supercomputer) script which you can find in conf/myriad.config. Find more info about setting the config with your computational helpdesk or check public repos (e.g. https://github.com/nf-core/configs/tree/master/conf) for examples.
+
+7. To set your own input data and phenotype to run the SVM around, use the following flags:
+```
+--rnaseq = "$baseDir/data/counts_clean_subsample.csv"
+--phenot = "$baseDir/data/phenotypic_data.csv"
+--condA  = "queen"
+--condB  = "worker_ctrl"
+```
+Where:
+`rnaseq` is the matrix of counts. Here in the example, the file is in the data directory
+`phenot` is the matrix of phenotypes
+`condA` is the chosen word to choose for the positive condition (1)
+`condB` is the chosen word to choose for the negative condition (0)
+
+# Info for testing only
+To use R in docker , pull this repo and execute R using (should take 5 mins to download):
+
+```
+docker run -it --rm chriswyatt/svm1071deseq2limma R
+```
 
 # Taylor-et-al-2020-demo
 

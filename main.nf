@@ -22,14 +22,17 @@ nextflow.enable.dsl = 2
  */
 params.rnaseq = "$baseDir/data/counts_clean_subsample.csv"
 params.phenot = "$baseDir/data/phenotypic_data.csv"
+params.condA  = "queen"
+params.condB  = "worker_ctrl"
 params.outdir = "results"
-
+params.crossfold = 3
+params.numFeatureTarget = 100
+params.numRepeatStochasticity = 3
 
 //For CPU and Memory of each process: see conf/optimized_processes.config
 
 log.info """\
  S V M 
- S P L I C I N G
  P I P E L I N E
  ===================================
  input rnaseq data                    : ${params.rnaseq}
@@ -54,7 +57,7 @@ input_phenotype = channel
 
 
 workflow {
-    RUN_SVM ( input_rnaseq , input_phenotype)
+    RUN_SVM ( input_rnaseq , input_phenotype )
 }
 
 workflow.onComplete {
